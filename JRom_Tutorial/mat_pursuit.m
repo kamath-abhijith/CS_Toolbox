@@ -46,16 +46,18 @@ for k = 1:10
 end
     
 %% Plots
-figure, stem(f)
+figure, subplot(2,1,1)
+stem(fmp_est,'-r',"LineWidth",2)
 hold on, grid on
-stem(fmp_est)
+stem(f,'--b',"LineWidth",1)
 legend('Ground Truth','Reconstruction')
 xlabel('n'), ylabel('f(n)')
 title('Reconstruction using Matching Pursuit')
 
-figure, stem(f)
+subplot(2,1,2)
+stem(fomp_est,'-r',"LineWidth",2)
 hold on, grid on
-stem(fomp_est)
+stem(f,'--b',"LineWidth",1)
 legend('Ground Truth','Reconstruction')
 xlabel('n'), ylabel('f(n)')
 title('Reconstruction using Orthogonal Matching Pursuit')
