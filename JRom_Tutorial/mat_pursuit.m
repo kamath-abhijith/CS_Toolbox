@@ -29,7 +29,3 @@ stem(f,'--b',"LineWidth",1)
 legend('Ground Truth','Reconstruction')
 xlabel('n'), ylabel('f(n)')
 title('Reconstruction using Orthogonal Matching Pursuit')
-%%
-figure, stem(f)
-hold on
-stem(0.5*psi*sparse_ompcode)
