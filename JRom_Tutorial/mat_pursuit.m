@@ -8,10 +8,10 @@ f = load_dict_f.f;
 psi = load_dict_f.Psi;
 
 %% Matching Pursuit
-[fmp_est, residual_mp] = matching_pursuit(f,psi,50);
+[fmp_est, residual_mp, sparse_mpcode] = matching_pursuit(f,psi,50);
 
 %% Orthogonal Matching Pursuit
-[fomp_est, residual_omp] = matching_pursuit(f,psi,20);    
+[fomp_est, residual_omp, sparse_ompcode] = orthogonal_pursuit(f,psi,32);    
 
 %% Plots
 figure, subplot(2,1,1)
@@ -29,3 +29,7 @@ stem(f,'--b',"LineWidth",1)
 legend('Ground Truth','Reconstruction')
 xlabel('n'), ylabel('f(n)')
 title('Reconstruction using Orthogonal Matching Pursuit')
+%%
+figure, stem(f)
+hold on
+stem(0.5*psi*sparse_ompcode)
