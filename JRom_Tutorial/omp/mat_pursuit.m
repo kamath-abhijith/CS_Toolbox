@@ -8,7 +8,7 @@ f = load_dict_f.f;
 psi = load_dict_f.Psi;
 
 %% Matching Pursuit
-[fmp_est, residual_mp, sparse_mpcode] = matching_pursuit(f,psi,50);
+[fmp_est, residual_mp, sparse_mpcode] = matching_pursuit(f,psi,32);
 
 %% Orthogonal Matching Pursuit
 [fomp_est, residual_omp, sparse_ompcode] = orthogonal_pursuit(f,psi,32);    
