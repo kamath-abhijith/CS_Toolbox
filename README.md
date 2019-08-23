@@ -9,4 +9,4 @@ This repository also includes some MATLAB programmes implementing optimization a
 	- Orthogonal Matching Pursuit
 
 - lasso_admm
-	-ADMM Solver for LASSO
+	- ADMM Solver for LASSO
