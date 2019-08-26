@@ -10,3 +10,6 @@ This repository also includes some MATLAB programmes implementing optimization a
 
 - lasso_admm
 	- ADMM Solver for LASSO
+
+- lasso_ista
+	- ISTA Solver for ISTA
