@@ -20,10 +20,13 @@ function [z,obj] = lasso_admm(A,b,rho,alpha)
 %
 % Author: Abijith J Kamath
 % kamath-abhijith@github.io
+%
+% For more information, check: Lectures from Boyd
+% https://web.stanford.edu/~boyd/papers/pdf/admm_slides.pdf
 
 % Global constraints
 MAX_ITER = 1000;
-ABSTOL = 1e-4;
+ABSTOL = 1e-6;
 RELTOL = 1e-4;
 
 % Preprocessing and zero initialization
