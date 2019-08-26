@@ -19,7 +19,7 @@ function [z,obj] = lasso_admm(A,b,rho,alpha)
 %         History object, obj
 %
 % Author: Abijith J Kamath
-% kamath-abhijith@gothub.io
+% kamath-abhijith@github.io
 
 % Global constraints
 MAX_ITER = 1000;
