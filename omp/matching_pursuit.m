@@ -1,4 +1,4 @@
-function [fmp_est, residual_mp, sparse_code] = matching_pursuit(f,psi,lim)
+function sparse_code = matching_pursuit(f,psi,lim)
 
 % INPUT: sparse signal f
 %        dictionary, psi
