@@ -1,4 +1,4 @@
-function [fomp_est, residual_omp, sparse_code] = orthogonal_pursuit(f,psi,lim)
+function sparse_code = orthogonal_pursuit(f,psi,lim)
 
 % INPUT: sparse signal f
 %        dictionary, psi
