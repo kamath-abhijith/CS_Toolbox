@@ -13,3 +13,8 @@ This repository also includes some MATLAB programmes implementing optimization a
 
 - lasso_ista
 	- ISTA Solver for ISTA
+
+- tikhonov
+	- Closed form Tikhonov solver using SVD
+
+$x=y$
