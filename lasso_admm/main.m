@@ -9,7 +9,7 @@ psi = load_dict_f.Psi;
 
 %% Solve using lasso and matching pursuit
 x = lasso_admm(psi,f,1,1.5);
-[fmp_est, residual_mp, sparse_mpcode] = matching_pursuit(f,psi,64);
+sparse_mpcode = matching_pursuit(f,psi,64);
 
 %% Plots
 figure, subplot(2,2,1)
@@ -27,7 +27,7 @@ xlabel('n'), ylabel('x')
 subplot(2,2,2)
 stem(f,'--b',"LineWidth",2)
 hold on, grid on
-stem(fmp_est,'-r',"LineWidth",1)
+stem(psi*sparse_mpcode,'-r',"LineWidth",1)
 title('Reconstruction - Matching Pursuit')
 xlabel('n'), ylabel('f(n)')
 

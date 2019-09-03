@@ -1,4 +1,4 @@
-function [z,obj] = lasso_admm(A,b,rho,alpha)
+function [z,obj] = lasso_admm(A,b,rho,alpha,varargin)
 % Solves lasso using ADMM
 %   minimise ||x||_1 + (1/2)||Ax-b||^2
 %
@@ -15,6 +15,12 @@ function [z,obj] = lasso_admm(A,b,rho,alpha)
 %       Signal, b
 %       Augmented Lagrange parameter, rho
 %       Relaxation weight, alpha (typically in 1-1.8)
+%       
+%       Optional input arguments:
+%           Maximum number of iterations, MAX_ITER
+%           Absolute error tolerance, ABSTOL
+%           Relative error tolerance, RELTOL
+%
 % OUTPUT: Sparse code, z=x
 %         History object, obj
 %
@@ -24,10 +30,24 @@ function [z,obj] = lasso_admm(A,b,rho,alpha)
 % For more information, check: Lectures from Boyd
 % https://web.stanford.edu/~boyd/papers/pdf/admm_slides.pdf
 
-% Global constraints
-MAX_ITER = 500000;
-ABSTOL = 1e-10;
-RELTOL = 1e-8;
+% Reading arguments / setting global constraints
+if nargin>=5
+    MAX_ITER = varargin{1};
+else
+    MAX_ITER = 1000;
+end
+
+if nargin>=6
+    ABSTOL = varargin{2};
+else
+    ABSTOL = 1e-6;
+end
+
+if nargin>=7
+    RELTOL = varargin{3};
+else
+    RELTOL = 1e-4;
+end
 
 % Preprocessing and zero initialization
 [m,n] = size(A);

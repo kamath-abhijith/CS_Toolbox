@@ -1,4 +1,4 @@
-function x = lasso_ista(A,b,lambda)
+function x = lasso_ista(A,b,lambda,varargin)
 % Solves lasso using ISTA
 %   minimise lambda*||x||_1 + (1/2)||Ax-b||^2
 %
@@ -8,6 +8,11 @@ function x = lasso_ista(A,b,lambda)
 % INPUT: Dictionary, A
 %       Signal, b
 %       l1 penalty weight, lambda
+%
+%       Optional input arguments:
+%           Maximum number of iterations, MAX_ITER
+%           Absolute error tolerance, ABSTOL
+%
 % OUTPUT: Sparse code, z=x
 %
 % Author: Abijith J Kamath
@@ -16,12 +21,21 @@ function x = lasso_ista(A,b,lambda)
 % For more information, check: Daubechies et. al.
 % https://onlinelibrary.wiley.com/doi/abs/10.1002/cpa.20042
 
-% Global constraints
-MAX_ITER = 500000;
-ABSTOL = 1e-10;
+% Reading arguments / setting global constraints
+if nargin>=5
+    MAX_ITER = varargin{1};
+else
+    MAX_ITER = 1000;
+end
+
+if nargin>=6
+    ABSTOL = varargin{2};
+else
+    ABSTOL = 1e-6;
+end
 
 % Preprocessing and zero initialization
-[m,n] = size(A);
+[~,n] = size(A);
 x = zeros(n,1);
 t = 1/max(eig(A'*A));
 
