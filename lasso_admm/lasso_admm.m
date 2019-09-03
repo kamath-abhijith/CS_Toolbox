@@ -25,9 +25,9 @@ function [z,obj] = lasso_admm(A,b,rho,alpha)
 % https://web.stanford.edu/~boyd/papers/pdf/admm_slides.pdf
 
 % Global constraints
-MAX_ITER = 1000;
-ABSTOL = 1e-6;
-RELTOL = 1e-4;
+MAX_ITER = 500000;
+ABSTOL = 1e-10;
+RELTOL = 1e-8;
 
 % Preprocessing and zero initialization
 [m,n] = size(A);
@@ -70,5 +70,12 @@ end
 end
 
 function s = shrinkage(v,a)
+% Soft thresholding
+%
+% INPUT:  Thersholding variable, v
+%         Shrinkage factor, a
+%
+% OUTPUT: Output of soft thresholding
+
     s = max(0,v-a) - max(0,-v-a);
 end
