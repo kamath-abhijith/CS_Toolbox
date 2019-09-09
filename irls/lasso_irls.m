@@ -44,10 +44,10 @@ for i = 1:MAX_ITER
     xold = x;
     
     % x-update
-    x = 0.5*(lambda*W+2*AtA)\(A'*b);
+    x = (2*lambda*W + AtA)\(A'*b);
     
     % W-update
-    W = diag(1./abs(x));
+    W = diag(1./(abs(x)+1e-6));
     
     % Stopping criterion
     if norm(x-xold)/norm(xold) < ABSTOL
