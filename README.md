@@ -5,15 +5,23 @@ This repository also includes some MATLAB programmes implementing optimization a
 
 
 ## Contents
+*Greedy algorithms*
 - omp
 	- Matching Pursuit
 	- Orthogonal Matching Pursuit
 
+*Convex-relaxed sparsity constraint*
 - lasso_admm
 	- ADMM Solver for LASSO
 
 - lasso_ista
-	- ISTA Solver for ISTA
+	- ISTA Solver for LASSO
+	- Fast ISTA Solver for LASSO, FISTA
 
+- irls
+	- IRLS solver for LASSO
+
+*Low energy constraint*
 - tikhonov
 	- Closed form Tikhonov solver using SVD
+	- Tikhonov solver using Majorizer-Minimization
