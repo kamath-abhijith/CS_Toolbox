@@ -16,6 +16,11 @@ function x = tikh_svd(A,b,lambda)
 s = diag(S);
 
 % Solver in closed form
-x = V(:,1:m)*(s.*(U'*b)./(s.^2+lambda^2));    
-
+if n>=m
+    x = V(:,1:m)*(s.*(U'*b)./(s.^2+lambda^2));
+else
+    s = [s; zeros(m-n,1)];
+    V = [V zeros(n,m-n)];
+    x = V*(s.*(U'*b)./(s.^2+lambda^2));
+end    
 end
