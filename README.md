@@ -25,3 +25,7 @@ This repository also includes some MATLAB programmes implementing optimization a
 - tikhonov
 	- Closed form Tikhonov solver using SVD
 	- Tikhonov solver using Majorizer-Minimization
+
+_**Applications**_
+- dct2
+	- Sparse recovery algorithms on images built on a complete 2D-DCT basis
