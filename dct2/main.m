@@ -120,7 +120,7 @@ function DICT_ELE = dct2_dictlm(l,m)
 % OUTPUT: (l,m)th basis matrix
 
     % Support
-    [x,y] = meshgrid(0:0.036:1);
+    [x,y] = meshgrid(0:1:27);
     Nx = length(x); Ny = length(y);
     
     % Weight
