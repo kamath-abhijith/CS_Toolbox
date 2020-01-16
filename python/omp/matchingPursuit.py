@@ -1,19 +1,17 @@
 import numpy as np
-from scipy.io import loadmat
 
-from matplotlib import pyplot as plt
-from matplotlib import style
+def mat_pursuit(A,b,iter_lim):
+    m,n = np.shape(A)
+    bmp = np.zeros((m,1))
+    sparse_code = np.zeros((n,1))
+    res_b = b[:,0]
+    
+    for i in range(iter_lim):
+        weights = A.transpose().dot(res_b)
+        idx = np.argmax(np.abs(weights))
+        sparse_code[idx] = sparse_code[idx] + weights[idx]
+        update = weights[idx]*A[:,idx]
+        bmp = bmp + update
+        res_b = res_b - update
 
-## Load signal and dictionary
-load_dict_f = loadmat('hw1problem3.mat')
-
-Psi = load_dict_f['Psi']
-f = load_dict_f['f']
-
-## Plots
-style.use('ggplot')
-style.use('dark_background')
-
-plt.figure()
-plt.plot(f,color='red')
-plt.show()
+    return sparse_code
