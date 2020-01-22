@@ -47,13 +47,12 @@ sparse_code = zeros(n,1);
 % end
 
 for k = 1:lim
-    proj = psi'*residual_omp;
+    proj = A'*residual_omp;
     [~,idx] = max(abs(proj));
     
     supp = sort(union(supp,idx));
-    xs = pinv(psi(:,supp))*f;
+    xs = pinv(A[:,supp])*b;
     
-    sparse_code(supp) = xs;
-    residual_omp = f - psi*sparse_code;
+    x[]
 end
 
