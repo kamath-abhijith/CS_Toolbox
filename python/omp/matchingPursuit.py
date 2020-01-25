@@ -29,14 +29,14 @@ def greedy_mp(A,b,*argv):
     ## Initializations
     m,n = np.shape(A)
     bmp = np.zeros((m,1))
-    x = np.zeros((n,1))
+    x = np.zeros((n,1),dtype=complex)
     res_b = b[:,0]
 
     ## Iterations
     for i in range(iter_lim):
 
         # Projection step
-        weights = A.transpose().dot(res_b)
+        weights = np.conj(A.transpose()).dot(res_b)
         idx = np.argmax(np.abs(weights))
 
         # Update step
@@ -84,7 +84,7 @@ def greedy_omp(A,b,*argv):
     ## Initialization
     m,n = np.shape(A)
     bomp = np.zeros((m,1))
-    x = np.zeros((n,1))
+    x = np.zeros((n,1),dtype=complex)
     supp = []
     res_b = b[:,0]
 
@@ -92,7 +92,7 @@ def greedy_omp(A,b,*argv):
     for i in range(iter_lim):
 
         # Projection step
-        proj = A.transpose().dot(res_b)
+        proj = np.conj(A.transpose()).dot(res_b)
         idx = np.argmax(np.abs(proj))
 
         # Support update
@@ -113,3 +113,7 @@ def greedy_omp(A,b,*argv):
             break
 
     return x
+
+def greedy_cosamp(A,b,s,*argv):
+
+    return 0
