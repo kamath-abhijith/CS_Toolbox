@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from matplotlib import style
 from matplotlib import rcParams
 
-from matchingPursuit import *
+from cs_pkg import *
 
 ## Time support
 n = np.arange(512)
@@ -64,10 +64,10 @@ plt.legend()
 
 fig, plts = plt.subplots(2,sharex=True)
 plts[0].stem(x.real,'g',markerfmt='gx',label='True')
-plts[0].set_ylabel(r'$x$')
+plts[0].set_ylabel(r'$\mathbf{x}$')
 plts[0].set_xlabel(r'$N$')
 plts[1].stem(x_rec.real,'r',markerfmt='rx',label='Estimate')
-plts[1].set_ylabel(r'$\bar{x}$')
+plts[1].set_ylabel(r'$\mathbf{\bar{x}}$')
 plts[1].set_xlabel(r'$N$')
 plt.suptitle('Sparsity in Fourier Domain')
 plt.show()

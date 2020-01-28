@@ -1,6 +1,15 @@
 import numpy as np
 
-def greedy_mp(A,b,*argv):
+def shrinkage(x,a):
+    '''
+    INPUT:  Vector, x
+            Thresholding parameter, a
+
+    OUTPUT: Soft thresholded vector
+    '''
+    return np.maximum(0,x-a) - np.maximum(0,-x-a)
+
+def greedy_mp(A,b,L,*argv):
     '''
     Sparse recovery using matching pursuit
 
@@ -114,6 +123,51 @@ def greedy_omp(A,b,*argv):
 
     return x
 
-def greedy_cosamp(A,b,s,*argv):
+def pursuit_ista(A,b,L,*argv):
+    '''
+    Sparse recovery using Iterative
+    Soft Thresholding (ISTA)
 
-    return 0
+    INPUT:  Measurement matrix, A
+            Measurements, b
+            Sparsity penalty, L
+            Optional: Number of iterations
+                      Error tolerance
+    OUTPUT: Estimated sparse vector
+
+    Author: Abijith J. Kamath
+    kamath-abhijith.github.io
+    '''
+
+    ## Read optional arguments
+    nargin = len(argv)
+    if (nargin >= 1):
+        iter_lim = argv[0]
+    else:
+        iter_lim = len(b)
+
+    if (nargin >= 2):
+        tol = argv[1]
+    else:
+        tol = 1e-6
+
+    ## Initialization
+    m,n = np.shape(A)
+    x = np.zeros((n,1),dtype=complex)
+    
+    ## Proximal weight
+    AHA = np.conj(A.T).dot(A)
+    eigval,eigvec = np.linalg.eig(AHA)
+    t = 1.0/np.max(eigval)
+
+    ## ISTA Iterations
+    for i in range(int(iter_lim)):
+
+        xold = x
+        x = shrinkage(x+t*np.conj(A.T).dot(b-A.dot(x)),L*t)
+
+        # Stopping criterion
+        if (np.linalg.norm(x-xold)/np.linalg.norm(xold)<tol):
+            break
+
+    return x
