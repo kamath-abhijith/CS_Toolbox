@@ -191,6 +191,9 @@ def pursuit_admm(A,b,L,rho,*argv):
 
     Author: Abijith J. Kamath
     kamath-abhijith.github.io
+
+    For more information, check: Lectures from Boyd
+    https://web.stanford.edu/~boyd/papers/pdf/admm_slides.pdf
     '''
 
     ## Read optional arguments
@@ -236,4 +239,3 @@ def pursuit_admm(A,b,L,rho,*argv):
             break
 
     return z
-    
