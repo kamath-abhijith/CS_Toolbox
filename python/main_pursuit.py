@@ -19,41 +19,60 @@ b_rec_omp = A.dot(x_omp)
 x_ista = pursuit_ista(A,b,0.01,1000)
 b_rec_ista = A.dot(x_ista)
 
-## Error metrics
-eb_ista = b-b_rec_ista
-eb_ista_norm = np.linalg.norm(eb_ista)
-eb_ista_norm_db = 20*np.log10(eb_ista_norm)
-print("l2 norm of the error using ISTA: ",eb_ista_norm_db,"dB")
+x_admm = pursuit_admm(A,b,1,1.5)
+b_rec_admm = A.dot(x_admm)
 
+## Error metrics
 eb_omp = b-b_rec_omp
 eb_omp_norm = np.linalg.norm(eb_omp)
 eb_omp_norm_db = 20*np.log10(eb_omp_norm)
 print("l2 norm of the error using OMP: ",eb_omp_norm_db,"dB")
 
+eb_ista = b-b_rec_ista
+eb_ista_norm = np.linalg.norm(eb_ista)
+eb_ista_norm_db = 20*np.log10(eb_ista_norm)
+print("l2 norm of the error using ISTA: ",eb_ista_norm_db,"dB")
+
+eb_admm = b-b_rec_admm
+eb_admm_norm = np.linalg.norm(eb_admm)
+eb_admm_norm_db = 20*np.log10(eb_admm_norm)
+print("l2 norm of the error using ADMM: ",eb_admm_norm_db,"dB")
+
 ## Plots
 style.use('ggplot')
-# style.use('dark_background')
+style.use('dark_background')
 
 rcParams['text.usetex'] = True
 
-fig, plts = plt.subplots(2,2)
+fig, plts = plt.subplots(2,3)
 plts[0][0].plot(b,color='green',label='True')
-plts[0][0].plot(b_rec_ista,'--',color='red',label='Estimate')
+plts[0][0].plot(b_rec_omp,'--',color='red',label='Estimate')
 plts[0][0].set_xlabel(r"m")
 plts[0][0].set_ylabel(r"b")
-plts[0][0].set_title(r"ISTA")
+plts[0][0].set_title(r"Orthogonal Matching Pursuit")
 plts[0][0].legend()
-plts[1][0].stem(x_ista.real,'-b')
+plts[1][0].stem(x_omp.real,'-b')
 plts[1][0].set_xlabel(r"N")
 plts[1][0].set_ylabel(r"x")
 
 plts[0][1].plot(b,color='green',label='True')
-plts[0][1].plot(b_rec_omp,'--',color='red',label='Estimate')
+plts[0][1].plot(b_rec_ista,'--',color='red',label='Estimate')
 plts[0][1].set_xlabel(r"m")
 plts[0][1].set_ylabel(r"b")
-plts[0][1].set_title(r"Orthogonal Matching Pursuit")
+plts[0][1].set_title(r"ISTA")
 plts[0][1].legend()
-plts[1][1].stem(x_omp.real,'-b')
+plts[1][1].stem(x_ista.real,'-b')
 plts[1][1].set_xlabel(r"N")
 plts[1][1].set_ylabel(r"x")
+
+plts[0][2].plot(b,color='green',label='True')
+plts[0][2].plot(b_rec_admm,'--',color='red',label='Estimate')
+plts[0][2].set_xlabel(r"m")
+plts[0][2].set_ylabel(r"b")
+plts[0][2].set_title(r"ADMM")
+plts[0][2].legend()
+plts[1][2].stem(x_admm.real,'-b')
+plts[1][2].set_xlabel(r"N")
+plts[1][2].set_ylabel(r"x")
+
 plt.show()

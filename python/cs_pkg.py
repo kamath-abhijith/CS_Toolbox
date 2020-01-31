@@ -17,6 +17,7 @@ def greedy_mp(A,b,L,*argv):
             Measurements, b
             Optional: Number of iterations
                       Error tolerance
+
     OUTPUT: Estimated sparse vector
 
     Author: Abijith J. Kamath
@@ -71,6 +72,7 @@ def greedy_omp(A,b,*argv):
             Measurements, b
             Optional: Number of iterations
                       Error tolerance
+
     OUTPUT: Estimated sparse vector
 
     Author: Abijith J. Kamath
@@ -133,6 +135,7 @@ def pursuit_ista(A,b,L,*argv):
             Sparsity penalty, L
             Optional: Number of iterations
                       Error tolerance
+
     OUTPUT: Estimated sparse vector
 
     Author: Abijith J. Kamath
@@ -171,3 +174,66 @@ def pursuit_ista(A,b,L,*argv):
             break
 
     return x
+
+def pursuit_admm(A,b,L,rho,*argv):
+    '''
+    Sparse recovery using basis pursuit
+    Oprimization solved using ADMM
+
+    INPUT:  Measurement matrix, A
+            Measurements, b
+            Relaxation weight, L
+            Sparsity penalty, rho
+            Optional: Number of iterations
+                      Error tolerance
+
+    OUTPUT: Estimated sparse vector
+
+    Author: Abijith J. Kamath
+    kamath-abhijith.github.io
+    '''
+
+    ## Read optional arguments
+    nargin = len(argv)
+    if (nargin >= 1):
+        iter_lim = argv[0]
+    else:
+        iter_lim = len(b)
+
+    if (nargin >= 2):
+        tol = argv[1]
+    else:
+        tol = 1e-6
+    
+    ## Initialization
+    m,n = np.shape(A)
+    x = np.zeros((n,1),dtype=complex)
+    u = np.zeros((n,1),dtype=complex)
+    z = np.zeros((n,1),dtype=complex)
+
+    ## Static objects
+    AAt = A.dot(np.conj(A.T))
+    P = np.identity(n) - np.conj(A.T).dot(np.linalg.solve(AAt,A))
+    q = np.conj(A.T).dot(np.linalg.solve(AAt,b))
+
+    ## ADMM Iterations
+    for i in range(iter_lim):
+
+        # x update
+        x = P.dot(z-u)[:,0] + q[:,0]
+        x = x[:,np.newaxis]
+
+        # z update
+        zold = z
+        xhat = L*x + (1-L)*zold
+        z = shrinkage(x+u,1.0/rho)
+
+        # u update
+        u = u + (xhat-z)
+
+        # Stopping criterion
+        if (np.linalg.norm(z-zold)/np.linalg.norm(zold)<tol):
+            break
+
+    return z
+    

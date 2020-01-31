@@ -11,11 +11,18 @@ psi = load_dict_f.Psi;
 x = lasso_admm(psi,f,1,1.5);
 sparse_mpcode = matching_pursuit(f,psi,64);
 
+b_admm = psi*x;
+b_omp = psi*sparse_mpcode;
+
+%% Error metrics
+eb_admm = 20*log10(norm(f-b_admm));
+eb_omp = 20*log10(norm(f-b_omp));
+
 %% Plots
 figure, subplot(2,2,1)
 stem(f,'--b',"LineWidth",2)
 hold on, grid on
-stem(psi*x,'-r',"LineWidth",1)
+stem(b_admm,'-r',"LineWidth",1)
 title('Reconstruction - Basis Pursuit')
 xlabel('n'), ylabel('f(n)')
 
@@ -27,7 +34,7 @@ xlabel('n'), ylabel('x')
 subplot(2,2,2)
 stem(f,'--b',"LineWidth",2)
 hold on, grid on
-stem(psi*sparse_mpcode,'-r',"LineWidth",1)
+stem(b_omp,'-r',"LineWidth",1)
 title('Reconstruction - Matching Pursuit')
 xlabel('n'), ylabel('f(n)')
 
