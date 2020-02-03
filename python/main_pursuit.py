@@ -19,7 +19,7 @@ b_rec_omp = A.dot(x_omp)
 x_ista = pursuit_ista(A,b,0.01,1000)
 b_rec_ista = A.dot(x_ista)
 
-x_admm = pursuit_admm(A,b,1,1.5)
+x_admm, loss = pursuit_admm(A,b,1,1.5)
 b_rec_admm = A.dot(x_admm)
 
 ## Error metrics

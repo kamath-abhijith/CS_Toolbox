@@ -213,6 +213,7 @@ def pursuit_admm(A,b,L,rho,*argv):
     x = np.zeros((n,1),dtype=complex)
     u = np.zeros((n,1),dtype=complex)
     z = np.zeros((n,1),dtype=complex)
+    loss = np.zeros(iter_lim)
 
     ## Static objects
     AAt = A.dot(np.conj(A.T))
@@ -235,7 +236,8 @@ def pursuit_admm(A,b,L,rho,*argv):
         u = u + (xhat-z)
 
         # Stopping criterion
+        loss[i] = (0.5)*np.linalg.norm(A.dot(z)-b)**2 + L*np.linalg.norm(z,1)
         if (np.linalg.norm(z-zold)/np.linalg.norm(zold)<tol):
             break
 
-    return z
+    return z, loss
