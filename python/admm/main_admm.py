@@ -17,9 +17,13 @@ load_dict_f = loadmat('../hw1problem3.mat')
 A = load_dict_f['Psi']
 b = load_dict_f['f']
 
+## ADMM Solver
+MAX_ITER = 31
+TOL = 1e-6
+
 L1 = 0.5
 R1 = 1
-x_admm1, loss1 = pursuit_admm(A,b,L1,R1,100,1e-12)
+x_admm1, loss1 = pursuit_admm(A,b,L1,R1,MAX_ITER,TOL)
 b_rec_admm1 = A.dot(x_admm1)
 
 eb_admm1 = b-b_rec_admm1
@@ -28,8 +32,8 @@ eb_admm1_norm_db = 20*np.log10(eb_admm1_norm)
 print("l2 norm of the error using " + str(L1) + " and " + str(R1),eb_admm1_norm_db,"dB")
 
 L2 = 0.5
-R2 = 0.1
-x_admm2, loss2 = pursuit_admm(A,b,L2,R2,100,1e-12)
+R2 = .1
+x_admm2, loss2 = pursuit_admm(A,b,L2,R2,MAX_ITER,TOL)
 b_rec_admm2 = A.dot(x_admm2)
 
 eb_admm2 = b-b_rec_admm2
@@ -38,12 +42,13 @@ eb_admm2_norm_db = 20*np.log10(eb_admm2_norm)
 print("l2 norm of the error using " + str(L2) + " and " + str(R2),eb_admm2_norm_db,"dB")
 
 ## Plots
-style.use('bmh')
+# style.use('classic')
 # style.use('ggplot')
 # style.use('dark_background')
 
 rcParams['text.usetex'] = True
-rcParams.update({'font.size': 20})
+rcParams.update({'font.size': 24})
+rcParams['text.latex.preamble'] = [r'\usepackage{tgheros}'] 
 
 fig1 = plt.figure(1)
 plt.plot(b,color='green',label='True')
@@ -52,6 +57,7 @@ plt.plot(b_rec_admm2,'--',color='red',label=r'$\lambda=%.1f,\rho=%.1f$'%(L2,R2))
 plt.xlabel(r'$m$')
 plt.ylabel(r'$\mathbf{b}$')
 plt.title(r'Reconstruction')
+plt.grid()
 plt.legend()
 # fig1.savefig('/Users/abijithjkamath/Desktop/TECHNOLOGIE/Courses/RTP IISc/E9 203 Compressed Sensing/01_01.pdf',bbox_inches='tight')
 
@@ -60,7 +66,8 @@ plt.stem(x_admm1.real,'-b',markerfmt='bo',label=r'$\lambda=%.1f,\rho=%.1f$'%(L1,
 plt.stem(x_admm2.real,'-r',markerfmt='ro',label=r'$\lambda=%.1f,\rho=%.1f$'%(L2,R2))
 plt.xlabel(r'$N$')
 plt.ylabel(r'$\mathbf{x}$')
-plt.title(r'Sparse Code')
+plt.title(r'Sparse Vector')
+plt.grid()
 # plt.legend()
 # fig2.savefig('/Users/abijithjkamath/Desktop/TECHNOLOGIE/Courses/RTP IISc/E9 203 Compressed Sensing/01_02.pdf',bbox_inches='tight')
 
@@ -70,7 +77,8 @@ plt.semilogy(loss2,color='red',label=r'$\lambda=%.1f,\rho=%.1f$'%(L2,R2))
 plt.xlabel(r'Iterations')
 # plt.ylabel(r'$\frac{1}{2}\Vert A\mathbf{x}-\mathbf{b} \Vert_{2}^2 + \lambda \Vert \mathbf{x} \Vert_{1}$')
 plt.ylabel(r'$\frac{1}{2}\Vert A\mathbf{x}-\mathbf{b} \Vert_{2}^2$')
-plt.title(r'Convergence')
+plt.title(r'Loss')
+plt.grid()
 # plt.legend()
 # fig3.savefig('/Users/abijithjkamath/Desktop/TECHNOLOGIE/Courses/RTP IISc/E9 203 Compressed Sensing/01_03.pdf',bbox_inches='tight')
 
